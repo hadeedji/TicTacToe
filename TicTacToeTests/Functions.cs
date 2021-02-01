@@ -1,10 +1,8 @@
 ﻿using TicTacToeEngine;
 
 namespace TicTacToeTests {
-public partial class BoardTests {
-    private Board board { get; set; }
-
-    private static CellState CellStateFromCharacter(char stateCharacter) {
+public static class Functions {
+    public static CellState CellStateFromCharacter(char stateCharacter) {
         CellState state = stateCharacter switch {
             'e' => CellState.E,
             'x' => CellState.X,
@@ -13,7 +11,7 @@ public partial class BoardTests {
         return state;
     }
 
-    private void FillBoard(string stateString) {
+    public static void FillBoard(string stateString, Board board) {
         int rowIndex = 0;
         int columnIndex = 0;
         foreach (char stateCharacter in stateString) {
@@ -25,7 +23,7 @@ public partial class BoardTests {
         }
     }
 
-    private (CellState[] r1, CellState[] r2, CellState[] r3) Rows(string stateString) {
+    public static (CellState[] r1, CellState[] r2, CellState[] r3) Rows(string stateString) {
         int i = 0;
         CellState[] r1 = new CellState[3];
         foreach (char state in stateString.Substring(0, 3)) {
@@ -47,7 +45,7 @@ public partial class BoardTests {
         return (r1, r2, r3);
     }
 
-    private (CellState[] c1, CellState[] c2, CellState[] c3) Columns(string stateString) {
+    public static (CellState[] c1, CellState[] c2, CellState[] c3) Columns(string stateString) {
         int i = 0;
         var c1 = new CellState[3];
         var c2 = new CellState[3];

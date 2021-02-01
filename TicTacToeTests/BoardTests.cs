@@ -2,9 +2,11 @@ using System;
 using System.Diagnostics;
 using NUnit.Framework;
 using TicTacToeEngine;
+using static TicTacToeTests.Functions;
 
 namespace TicTacToeTests {
 public partial class BoardTests {
+    private Board board{get; set; }
     [SetUp]
     public void Setup() {
         board = new Board();
@@ -29,7 +31,7 @@ public partial class BoardTests {
         var stateString = "eoo" +
                           "oxe" +
                           "eoo";
-        FillBoard(stateString);
+        FillBoard(stateString, board);
         var (r1, r2, r3) = Rows(stateString);
 
         Assert.AreEqual(r1, board.Row(1));
@@ -42,7 +44,7 @@ public partial class BoardTests {
         var stateString = "eoo" +
                           "oxe" +
                           "eoo";
-        FillBoard(stateString);
+        FillBoard(stateString, board);
         var (c1, c2, c3) = Columns(stateString);
         Assert.AreEqual(c1, board.Column(1));
         Assert.AreEqual(c2, board.Column(2));
@@ -54,7 +56,7 @@ public partial class BoardTests {
         var stateString = "eoe" +
                           "oxe" +
                           "oox";
-        FillBoard(stateString);
+        FillBoard(stateString, board);
         var principalExpected = new[] {
             CellStateFromCharacter('e'),
             CellStateFromCharacter('x'),
