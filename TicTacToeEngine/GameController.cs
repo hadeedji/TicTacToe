@@ -19,6 +19,7 @@ public class GameController {
             DrawBoard(round.board);
             Move(round.movesMade % 2 == 0 ? player1: player2);
         } while (!round.HasEnded());
+        DrawBoard(round.board);
 
         if (!round.haveWinner) {
             return Result.Draw;
