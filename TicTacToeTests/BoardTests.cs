@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using NUnit.Framework;
 using TicTacToeEngine;
 using static TicTacToeTests.Functions;
@@ -70,6 +71,22 @@ public partial class BoardTests {
         
         Assert.AreEqual(principalExpected,board.Diagonal(true));
         Assert.AreEqual(nonPrincipalExpected,board.Diagonal(false));
+    }
+
+    [Test]
+    public void CopyGrid_GridsAreEqual() {
+        var stateString = "eoe" +
+                          "oxe" +
+                          "oox";
+        FillBoard(stateString, board);
+        var copy = new Board(board.grid);
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                Assert.AreEqual(copy[i,j], board[i,j]);
+            }
+        }
+        
     }
 }
 }
