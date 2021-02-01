@@ -79,7 +79,7 @@ public partial class BoardTests {
                           "oxe" +
                           "oox";
         FillBoard(stateString, board);
-        var copy = new Board(board.grid);
+        var copy = board.grid;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

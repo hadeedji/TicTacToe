@@ -22,7 +22,7 @@ public class Board {
         set => _grid[rowIndex, columnIndex] = value;
     }
 
-    public CellState[,] grid {
+    public Board grid {
         get {
             var copy = new CellState[3, 3];
             for (int i = 0; i < 3; i++) {
@@ -31,7 +31,7 @@ public class Board {
                 }
             }
 
-            return copy;
+            return new Board(copy);
         }
     }
 
