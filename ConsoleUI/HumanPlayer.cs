@@ -6,7 +6,7 @@ public class HumanPlayer : Player {
     public HumanPlayer(string name) : base(name) { }
 
     public override (int, int) MakeMove(Board board) {
-        Console.WriteLine("Enter the comma separated coordinates:\n> ");
+        Console.Write("Enter the comma separated coordinates:\n> ");
         string input = Console.ReadLine();
         int rowIndex = Convert.ToInt32(input.Split(',')[0]);
         int columnIndex = Convert.ToInt32(input.Split(',')[1]);
