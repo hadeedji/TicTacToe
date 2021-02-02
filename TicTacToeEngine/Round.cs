@@ -40,7 +40,7 @@ internal class Round {
             }
         }
 
-        foreach (bool isPrincipal in new bool[2] {true, false}) {
+        foreach (bool isPrincipal in new[] {true, false}) {
             if (_board.Diagonal(isPrincipal).All(state => state == _board.Diagonal(isPrincipal)[0] && state != CellState.E)) {
                 haveWinner = true;
                 return true;

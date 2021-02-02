@@ -11,7 +11,7 @@ public class GameController {
         (this.player1.mark, this.player2.mark) = (CellState.X, CellState.O);
     }
 
-    public event Action<Board> DrawBoard;
+    public event Action<Board> DrawBoard = delegate{  };
 
     public Result StartGame() {
         round = new Round();

@@ -2,13 +2,13 @@
 
 namespace TicTacToeEngine {
 public class Board {
-    private CellState[,] _grid;
+    private readonly CellState[,] _grid;
 
     public Board() {
         _grid = new CellState[3, 3];
     }
 
-    public Board(CellState[,] grid) {
+    private Board(CellState[,] grid) {
         if (grid.GetLength(0) == 3 && grid.GetLength(1) == 3) {
             _grid = grid;
         } else {
@@ -45,8 +45,8 @@ public class Board {
 
     public CellState[] Diagonal(bool isPrincipal) {
         return isPrincipal
-            ? new CellState[] {this[0, 0], this[1, 1], this[2, 2]}
-            : new CellState[] {this[2, 0], this[1, 1], this[0, 2]};
+            ? new[] {this[0, 0], this[1, 1], this[2, 2]}
+            : new[] {this[2, 0], this[1, 1], this[0, 2]};
     }
 }
 

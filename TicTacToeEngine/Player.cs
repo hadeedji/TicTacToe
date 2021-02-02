@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TicTacToeEngine {
+﻿namespace TicTacToeEngine {
 public abstract class Player {
     public string name { get; }
     public CellState mark { get; internal set; }

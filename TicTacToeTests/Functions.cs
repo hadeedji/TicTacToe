@@ -1,4 +1,5 @@
-﻿using TicTacToeEngine;
+﻿using System;
+using TicTacToeEngine;
 
 namespace TicTacToeTests {
 public static class Functions {
@@ -7,6 +8,7 @@ public static class Functions {
             'e' => CellState.E,
             'x' => CellState.X,
             'o' => CellState.O,
+            _ => throw new ArgumentOutOfRangeException(nameof(stateCharacter), stateCharacter, null)
         };
         return state;
     }

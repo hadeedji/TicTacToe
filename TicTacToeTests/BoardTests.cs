@@ -1,12 +1,10 @@
 using System;
-using System.Diagnostics;
-using System.Linq;
 using NUnit.Framework;
 using TicTacToeEngine;
 using static TicTacToeTests.Functions;
 
 namespace TicTacToeTests {
-public partial class BoardTests {
+public class BoardTests {
     private Board board{get; set; }
     [SetUp]
     public void Setup() {
@@ -15,16 +13,16 @@ public partial class BoardTests {
 
     [Test]
     public void InitializeBoard_RowsShouldBeEmpty() {
-        Array.TrueForAll(board.Row(1), (state) => state == CellState.E);
-        Array.TrueForAll(board.Row(2), (state) => state == CellState.E);
-        Array.TrueForAll(board.Row(3), (state) => state == CellState.E);
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
     }
 
     [Test]
     public void InitializeBoard_ColumnsShouldBeEmpty() {
-        Array.TrueForAll(board.Column(1), (state) => state == CellState.E);
-        Array.TrueForAll(board.Column(2), (state) => state == CellState.E);
-        Array.TrueForAll(board.Column(3), (state) => state == CellState.E);
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
     }
 
     [Test]

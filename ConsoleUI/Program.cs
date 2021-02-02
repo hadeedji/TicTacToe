@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using TicTacToeEngine;
 
 namespace ConsoleUI {
 class Program {
-    static void Main(string[] args) {
+    static void Main() {
         var gameController = new GameController(new HumanPlayer("Hadeed"), new HumanPlayer("Hamza"));
         
         gameController.DrawBoard += delegate(Board board) {
@@ -18,7 +17,8 @@ class Program {
         string message = result switch {
             Result.Draw => "The game was draw.",
             Result.PlayerOneWon => "Hadeed won!!!",
-            Result.PlayerTwoWon => "Hamza won!!!"
+            Result.PlayerTwoWon => "Hamza won!!!",
+            _ => throw new ArgumentOutOfRangeException()
         };
 
         Console.WriteLine(message);
@@ -35,6 +35,7 @@ class Program {
             CellState.E => '_',
             CellState.X => 'X',
             CellState.O => 'O',
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
         };
     }
 }
