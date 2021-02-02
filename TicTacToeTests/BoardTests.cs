@@ -13,16 +13,16 @@ public class BoardTests {
 
     [Test]
     public void InitializeBoard_RowsShouldBeEmpty() {
-        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
-        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
-        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == Cell.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == Cell.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == Cell.E));
     }
 
     [Test]
     public void InitializeBoard_ColumnsShouldBeEmpty() {
-        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
-        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
-        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == CellState.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == Cell.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == Cell.E));
+        Assert.True(Array.TrueForAll(board.Row(1), (state) => state == Cell.E));
     }
 
     [Test]
@@ -77,7 +77,7 @@ public class BoardTests {
                           "oxe" +
                           "oox";
         FillBoard(stateString, board);
-        var copy = board.grid;
+        var copy = board.GetCopy();
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

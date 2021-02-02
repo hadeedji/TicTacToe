@@ -1,48 +1,53 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace TicTacToeEngine {
 internal class Round {
     private Board _board;
-    public int movesMade { get; private set; }
-    public bool haveWinner { get; private set; }
+    public bool inPlay { get; set; }
+    public Result result;
 
-    public Board board {
-        get => _board.grid;
+    public event Action<Player> WinnerFound;
+    public event Action GameDrawn;
+
+    public Board boardCopy {
+        get => _board.GetCopy();
     }
 
     public Round() {
         _board = new Board();
-        movesMade = 0;
+        inPlay = true;
     }
 
+    public void Move(Player player) {
+        _board.MakeMark(player.MakeMove(boardCopy), player.mark);
+        if (FindWinner()) {
+            WinnerFound(player);
+            inPlay = false;
+        }
 
-    public void Move(Player player, (int rowIndex, int columnIndex) move) {
-        _board[move.rowIndex, move.columnIndex] = player.mark;
-        movesMade++;
+        if (boardCopy.numberOfEmptyCells == 0) {
+            result = Result.Draw;
+            inPlay = false;
+        }
     }
 
-    public bool HasEnded() {
-        return movesMade == 9 || FindWinner();
-    }
-
+    //TODO: Refactor FindWinner() please.
     private bool FindWinner() {
-        for (int i = 1; i <= 3; i++) {
-            if (_board.Row(i).All(state => state == _board.Row(i)[0] && state != CellState.E)) {
-                haveWinner = true;
+        for (int i = 0; i < 3; i++) {
+            if (_board.Row(i).All(state => state == _board.Row(i)[0] && state != Cell.E)) {
                 return true;
             }
         }
 
-        for (int i = 1; i <= 3; i++) {
-            if (_board.Column(i).All(state => state == _board.Column(i)[0] && state != CellState.E)) {
-                haveWinner = true;
+        for (int i = 0; i < 3; i++) {
+            if (_board.Column(i).All(state => state == _board.Column(i)[0] && state != Cell.E)) {
                 return true;
             }
         }
 
         foreach (bool isPrincipal in new[] {true, false}) {
-            if (_board.Diagonal(isPrincipal).All(state => state == _board.Diagonal(isPrincipal)[0] && state != CellState.E)) {
-                haveWinner = true;
+            if (_board.Diagonal(isPrincipal).All(state => state == _board.Diagonal(isPrincipal)[0] && state != Cell.E)) {
                 return true;
             }
         }

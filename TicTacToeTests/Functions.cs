@@ -3,11 +3,11 @@ using TicTacToeEngine;
 
 namespace TicTacToeTests {
 public static class Functions {
-    public static CellState CellStateFromCharacter(char stateCharacter) {
-        CellState state = stateCharacter switch {
-            'e' => CellState.E,
-            'x' => CellState.X,
-            'o' => CellState.O,
+    public static Cell CellStateFromCharacter(char stateCharacter) {
+        Cell state = stateCharacter switch {
+            'e' => Cell.E,
+            'x' => Cell.X,
+            'o' => Cell.O,
             _ => throw new ArgumentOutOfRangeException(nameof(stateCharacter), stateCharacter, null)
         };
         return state;
@@ -25,21 +25,21 @@ public static class Functions {
         }
     }
 
-    public static (CellState[] r1, CellState[] r2, CellState[] r3) Rows(string stateString) {
+    public static (Cell[] r1, Cell[] r2, Cell[] r3) Rows(string stateString) {
         int i = 0;
-        CellState[] r1 = new CellState[3];
+        Cell[] r1 = new Cell[3];
         foreach (char state in stateString.Substring(0, 3)) {
             r1[i++] = CellStateFromCharacter(state);
         }
 
         int j = 0;
-        CellState[] r2 = new CellState[3];
+        Cell[] r2 = new Cell[3];
         foreach (char state in stateString.Substring(3, 3)) {
             r2[j++] = CellStateFromCharacter(state);
         }
 
         int k = 0;
-        CellState[] r3 = new CellState[3];
+        Cell[] r3 = new Cell[3];
         foreach (char state in stateString.Substring(6, 3)) {
             r3[k++] = CellStateFromCharacter(state);
         }
@@ -47,11 +47,11 @@ public static class Functions {
         return (r1, r2, r3);
     }
 
-    public static (CellState[] c1, CellState[] c2, CellState[] c3) Columns(string stateString) {
+    public static (Cell[] c1, Cell[] c2, Cell[] c3) Columns(string stateString) {
         int i = 0;
-        var c1 = new CellState[3];
-        var c2 = new CellState[3];
-        var c3 = new CellState[3];
+        var c1 = new Cell[3];
+        var c2 = new Cell[3];
+        var c3 = new Cell[3];
 
         for (var j = 0; j < stateString.Length; j++) {
             char state = stateString[j];

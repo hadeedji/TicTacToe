@@ -3,14 +3,16 @@ using TicTacToeEngine;
 
 namespace ConsoleUI {
 class Program {
+    private static Action<object> _field;
+
     static void Main() {
         var gameController = new GameController(new HumanPlayer("Hadeed"), new HumanPlayer("Hamza"));
         
-        gameController.DrawBoard += delegate(Board board) {
+        gameController.DrawBoard += board => {
             Console.WriteLine("\n");
+            PrintRow(board.Row(0));
             PrintRow(board.Row(1));
             PrintRow(board.Row(2));
-            PrintRow(board.Row(3));
         };
 
         var result = gameController.StartGame();
@@ -24,17 +26,17 @@ class Program {
         Console.WriteLine(message);
     }
 
-    static void PrintRow(CellState[] row) {
+    static void PrintRow(Cell[] row) {
         Console.WriteLine($"[{CharacterFromCellState(row[0])} " +
                           $"{CharacterFromCellState(row[1])} " +
-                          $"{CharacterFromCellState(row[2])}]"); 
+                          $"{CharacterFromCellState(row[2])}]");
     }
 
-    static char CharacterFromCellState(CellState state) {
+    static char CharacterFromCellState(Cell state) {
         return state switch {
-            CellState.E => '_',
-            CellState.X => 'X',
-            CellState.O => 'O',
+            Cell.E => '_',
+            Cell.X => 'X',
+            Cell.O => 'O',
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
         };
     }

@@ -6,31 +6,32 @@ public class GameController {
     private Player player2 { get; }
     private Round round { get; set; }
 
+    public event Action<Board> DrawBoard;
+
     public GameController(Player player1, Player player2) {
         (this.player1, this.player2) = (player1, player2);
-        (this.player1.mark, this.player2.mark) = (CellState.X, CellState.O);
+        (this.player1.mark, this.player2.mark) = (Cell.X, Cell.O);
     }
-
-    public event Action<Board> DrawBoard = delegate{  };
 
     public Result StartGame() {
         round = new Round();
+        
+        round.WinnerFound += player => {
+            if (player == player1) round.result = Result.PlayerOneWon;
+            if (player == player2) round.result = Result.PlayerTwoWon;
+        };
+        
         do {
-            DrawBoard(round.board);
-            Move(round.movesMade % 2 == 0 ? player1: player2);
-        } while (!round.HasEnded());
-        DrawBoard(round.board);
+            DrawBoard(round.boardCopy);
+            round.Move(player1);
+            DrawBoard(round.boardCopy);
+            
+            if (round.inPlay)
+                round.Move(player2);
+            
+        } while (round.inPlay);
 
-        if (!round.haveWinner) {
-            return Result.Draw;
-        }
-
-        return round.movesMade % 2 != 0 ? Result.PlayerOneWon : Result.PlayerTwoWon;
-    }
-
-    private void Move(Player player) {
-        var move = player.MakeMove(round.board);
-        round.Move(player, move);
+        return round.result;
     }
 }
 
