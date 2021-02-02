@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TicTacToeEngine {
+﻿namespace TicTacToeEngine {
 public class Board {
     private readonly Cell[,] _grid;
 

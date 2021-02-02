@@ -3,8 +3,6 @@ using TicTacToeEngine;
 
 namespace ConsoleUI {
 class Program {
-    private static Action<object> _field;
-
     static void Main() {
         Player player1 = new HumanPlayer(PromptAndInput("Enter player 1 name: "));
         Player player2 = new HumanPlayer(PromptAndInput("Enter player 2 name: "));

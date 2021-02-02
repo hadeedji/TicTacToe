@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using TicTacToeEngine;
 
 namespace ConsoleUI {
@@ -24,9 +23,16 @@ public class HumanPlayer : Player {
     }
 
     private (int, int) PromptAndRead() {
-        Console.Write("Enter the coordinates:\n> ");
-        var input = Console.ReadLine().Split(',').Select(x => Convert.ToInt32(x)).ToArray();
-        return (input[0] - 1, input[1] - 1);
+        Console.Write("Enter the cell:\n> ");
+        var input = Console.ReadLine();
+        var rowIndex = input[0] switch {
+            'a' => 0,
+            'b' => 1,
+            'c' => 2,
+            _ => -1
+        };
+        var columnIndex = Convert.ToInt32(input[1].ToString());
+        return (rowIndex, columnIndex - 1);
     }
 }
 }

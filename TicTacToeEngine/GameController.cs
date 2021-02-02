@@ -22,9 +22,9 @@ public class GameController {
         };
         
         do {
-            DrawBoard(round.boardCopy);
+            DrawBoard?.Invoke(round.boardCopy);
             round.Move(player1);
-            DrawBoard(round.boardCopy);
+            DrawBoard?.Invoke(round.boardCopy);
             
             if (round.inPlay)
                 round.Move(player2);

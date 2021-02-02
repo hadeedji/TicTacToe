@@ -8,7 +8,6 @@ internal class Round {
     public Result result;
 
     public event Action<Player> WinnerFound;
-    public event Action GameDrawn;
 
     public Board boardCopy {
         get => _board.GetCopy();
