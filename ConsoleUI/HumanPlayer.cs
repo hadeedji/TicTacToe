@@ -3,8 +3,6 @@ using TicTacToeEngine;
 
 namespace ConsoleUI {
 public class HumanPlayer : Player {
-    public HumanPlayer(string name) : base(name) { }
-
     public override CellLocation MakeMove(Board board) {
         while (true) {
             try {

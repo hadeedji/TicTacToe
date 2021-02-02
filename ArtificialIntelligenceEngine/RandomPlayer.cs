@@ -6,7 +6,7 @@ namespace ArtificialIntelligenceEngine {
 public class RandomPlayer : Player {
     private Random randomNumberGenerator { get; }
 
-    public RandomPlayer(string name, Random randomNumberGenerator) : base(name) {
+    public RandomPlayer(Random randomNumberGenerator){
         this.randomNumberGenerator = randomNumberGenerator;
     }
 
