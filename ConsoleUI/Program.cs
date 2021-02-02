@@ -7,13 +7,6 @@ class Program {
         Player player1 = new HumanPlayer(PromptAndInput("Enter player 1 name: "));
         Player player2 = new HumanPlayer(PromptAndInput("Enter player 2 name: "));
         var gameController = new GameController(player1, player2);
-        
-        gameController.DrawBoard += board => {
-            Console.WriteLine("\n");
-            PrintRow(board.Row(0));
-            PrintRow(board.Row(1));
-            PrintRow(board.Row(2));
-        };
 
         var result = gameController.StartGame();
         string message = result switch {
@@ -22,8 +15,18 @@ class Program {
             Result.PlayerTwoWon => $"{player2.name} won!!!",
             _ => throw new ArgumentOutOfRangeException()
         };
-
         Console.WriteLine(message);
+
+        Console.WriteLine($"{player1.name} wins: {gameController.player1Score}");
+        Console.WriteLine($"{player2.name} wins: {gameController.player2Score}");
+        Console.WriteLine($"Draws: {gameController.draws}");
+    }
+
+    static void Drawboard(Board board) {
+        Console.WriteLine("\n");
+        PrintRow(board.Row(0));
+        PrintRow(board.Row(1));
+        PrintRow(board.Row(2));
     }
 
     static void PrintRow(Cell[] row) {
@@ -42,7 +45,7 @@ class Program {
     }
 
     static string PromptAndInput(string prompt) {
-        Console.Write(prompt);        
+        Console.Write(prompt);
         return Console.ReadLine();
     }
 }

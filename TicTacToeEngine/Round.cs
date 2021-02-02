@@ -21,8 +21,9 @@ internal class Round {
     public void Move(Player player) {
         _board.MakeMark(player.MakeMove(boardCopy), player.mark);
         if (FindWinner()) {
-            WinnerFound(player);
+            WinnerFound?.Invoke(player);
             inPlay = false;
+            return;
         }
 
         if (boardCopy.numberOfEmptyCells == 0) {
