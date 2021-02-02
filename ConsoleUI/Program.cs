@@ -6,7 +6,9 @@ class Program {
     private static Action<object> _field;
 
     static void Main() {
-        var gameController = new GameController(new HumanPlayer("Hadeed"), new HumanPlayer("Hamza"));
+        Player player1 = new HumanPlayer(PromptAndInput("Enter player 1 name: "));
+        Player player2 = new HumanPlayer(PromptAndInput("Enter player 2 name: "));
+        var gameController = new GameController(player1, player2);
         
         gameController.DrawBoard += board => {
             Console.WriteLine("\n");
@@ -18,8 +20,8 @@ class Program {
         var result = gameController.StartGame();
         string message = result switch {
             Result.Draw => "The game was draw.",
-            Result.PlayerOneWon => "Hadeed won!!!",
-            Result.PlayerTwoWon => "Hamza won!!!",
+            Result.PlayerOneWon => $"{player1.name} won!!!",
+            Result.PlayerTwoWon => $"{player2.name} won!!!",
             _ => throw new ArgumentOutOfRangeException()
         };
 
@@ -39,6 +41,11 @@ class Program {
             Cell.O => 'O',
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
         };
+    }
+
+    static string PromptAndInput(string prompt) {
+        Console.Write(prompt);        
+        return Console.ReadLine();
     }
 }
 }
