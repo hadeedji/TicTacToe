@@ -1,26 +1,20 @@
-﻿namespace TicTacToeEngine {
+﻿using System;
+using System.Collections.Generic;
+
+namespace TicTacToeEngine {
 public class Board {
     private readonly Cell[,] _grid;
 
-    public int numberOfEmptyCells {
-        get {
-            int acc = 0;
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (this.GetCell(i,j) == Cell.E) {
-                        acc++;
-                    }
-                }
-            }
+    public int numberOfEmptyCells { get; private set; }
 
-            return acc;
-        }
+    public Board() {
+        _grid = new Cell[3, 3];
+        numberOfEmptyCells = 9;
     }
-
-    public Board() => _grid = new Cell[3, 3];
 
     internal void MakeMark(CellLocation location, Cell mark) {
         _grid[location.rowIndex, location.columnIndex] = mark;
+        numberOfEmptyCells--;
     }
 
     public Cell GetCell(CellLocation location) {
@@ -29,6 +23,19 @@ public class Board {
 
     public Cell GetCell(int rowIndex, int columnIndex) {
         return _grid[rowIndex, columnIndex];
+    }
+
+    public Cell[][] WinningArrangements() {
+        Cell[][] winningArrangements = new Cell[8][];
+
+        for (int i = 0; i < 3; i++) {
+            winningArrangements[i] = Row(i);
+            winningArrangements[i + 3] = Column(i);
+            if (i != 2)
+                winningArrangements[i + 6] = Diagonal(i);
+        }
+
+        return winningArrangements;
     }
 
     public Cell[] Row(int rowIndex) {
@@ -56,6 +63,10 @@ public class Board {
         }
 
         return diagonal;
+    }
+
+    public Cell[] Diagonal(int isPrincipal) {
+        return Diagonal(Convert.ToBoolean(isPrincipal));
     }
 }
 

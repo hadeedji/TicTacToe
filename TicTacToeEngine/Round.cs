@@ -28,22 +28,13 @@ internal class Round {
         }
     }
 
-    //TODO: Refactor FindWinner() please.
     private bool FindWinner() {
-        for (int i = 0; i < 3; i++) {
-            if (board.Row(i).All(state => state == board.Row(i)[0] && state != Cell.E)) {
-                return true;
-            }
-        }
+        var winningArangements = board.WinningArrangements();
+        foreach (Cell[] arangement in winningArangements) {
+            if (arangement.Contains(Cell.E))
+                continue;
 
-        for (int i = 0; i < 3; i++) {
-            if (board.Column(i).All(state => state == board.Column(i)[0] && state != Cell.E)) {
-                return true;
-            }
-        }
-
-        foreach (bool isPrincipal in new[] {true, false}) {
-            if (board.Diagonal(isPrincipal).All(state => state == board.Diagonal(isPrincipal)[0] && state != Cell.E)) {
+            if (arangement[0] == arangement[1] && arangement[1] == arangement[2]) {
                 return true;
             }
         }
