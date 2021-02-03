@@ -15,57 +15,34 @@ public class HumanPlayer : Player {
     }
 
     private (int, int) GetInput() {
-        var result = (-1, -1);
-        while (result == (-1,-1)) {
-            var key = Console.ReadKey(true).Key;
-            if (key == ConsoleKey.H) {
-                ToggleHelp?.Invoke();
-                while (Console.ReadKey(true).Key != ConsoleKey.H) { }
+        var consoleInputController = new ConsoleInputController();
 
-                ToggleHelp?.Invoke();
-            } else {
-                switch (key) {
-                    case ConsoleKey.D1:
-                    case ConsoleKey.NumPad1:
-                        result = (2, 0);
-                        break;
-                    case ConsoleKey.D2:
-                    case ConsoleKey.NumPad2:
-                        result = (2, 1);
-                        break;
-                    case ConsoleKey.D3:
-                    case ConsoleKey.NumPad3:
-                        result = (2, 2);
-                        break;
-                    case ConsoleKey.D4:
-                    case ConsoleKey.NumPad4:
-                        result = (1, 0);
-                        break;
-                    case ConsoleKey.D5:
-                    case ConsoleKey.NumPad5:
-                        result = (1, 1);
-                        break;
-                    case ConsoleKey.D6:
-                    case ConsoleKey.NumPad6:
-                        result = (1, 2);
-                        break;
-                    case ConsoleKey.D7:
-                    case ConsoleKey.NumPad7:
-                        result = (0, 0);
-                        break;
-                    case ConsoleKey.D8:
-                    case ConsoleKey.NumPad8:
-                        result = (0, 1);
-                        break;
-                    case ConsoleKey.D9:
-                    case ConsoleKey.NumPad9:
-                        result = (0, 2);
-                        break;
-                }
-            }
-        }
+        consoleInputController.AddKeybind(ConsoleKey.H, delegate {
+            ToggleHelp?.Invoke();
+            var helpInputController = new ConsoleInputController();
+            helpInputController.AddKeybind(ConsoleKey.H, delegate { ToggleHelp?.Invoke(); });
+            helpInputController.Run();
+            consoleInputController.Run();
+        });
 
+        (int, int) result = (-1, -1);
+        AddKeybind(ConsoleKey.D1, ConsoleKey.NumPad1, () => result = (2, 0));
+        AddKeybind(ConsoleKey.D2, ConsoleKey.NumPad2, () => result = (2, 1));
+        AddKeybind(ConsoleKey.D3, ConsoleKey.NumPad3, () => result = (2, 2));
+        AddKeybind(ConsoleKey.D4, ConsoleKey.NumPad4, () => result = (1, 0));
+        AddKeybind(ConsoleKey.D5, ConsoleKey.NumPad5, () => result = (1, 1));
+        AddKeybind(ConsoleKey.D6, ConsoleKey.NumPad6, () => result = (1, 2));
+        AddKeybind(ConsoleKey.D7, ConsoleKey.NumPad7, () => result = (0, 0));
+        AddKeybind(ConsoleKey.D8, ConsoleKey.NumPad8, () => result = (0, 1));
+        AddKeybind(ConsoleKey.D9, ConsoleKey.NumPad9, () => result = (0, 2));
+
+        consoleInputController.Run();
         return result;
+
+        void AddKeybind(ConsoleKey key1, ConsoleKey key2, Action action) {
+            consoleInputController.AddKeybind(key1, action);
+            consoleInputController.AddKeybind(key2, action);
+        }
     }
 }
 }
