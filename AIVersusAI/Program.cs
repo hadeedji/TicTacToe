@@ -3,7 +3,7 @@ using System.Diagnostics;
 using ArtificialIntelligenceEngine;
 using TicTacToeEngine;
 
-namespace AIVersurAI {
+namespace AIVersusAI {
 class Program {
     static void Main() {
         Random randomNumberGenerator = new Random();
