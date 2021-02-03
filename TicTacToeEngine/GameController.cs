@@ -6,11 +6,14 @@ public class GameController {
     private Player player2 { get; }
     private Round round { get; set; }
 
+    public Board board => round.board;
     public int player1Score { get; private set; }
     public int player2Score { get; private set; }
     public int draws { get; private set; }
 
-    public event Action<Board> DrawBoard;
+    public event Action DrawBoard;
+    public event Action RoundStarted;
+    public event Action RoundEnded;
 
     public GameController(Player player1, Player player2) {
         (this.player1, this.player2) = (player1, player2);
@@ -19,6 +22,7 @@ public class GameController {
 
     public Result StartGame() {
         round = new Round();
+        RoundStarted?.Invoke();
 
         round.WinnerFound += player => {
             if (player == player1) {
@@ -32,14 +36,14 @@ public class GameController {
             }
         };
 
-        DrawBoard?.Invoke(round.boardCopy);
+        DrawBoard?.Invoke();
         do {
             round.Move(player1);
-            DrawBoard?.Invoke(round.boardCopy);
+            DrawBoard?.Invoke();
 
             if (round.inPlay) {
                 round.Move(player2);
-                DrawBoard?.Invoke(round.boardCopy);
+                DrawBoard?.Invoke();
             }
         } while (round.inPlay);
 
@@ -47,6 +51,7 @@ public class GameController {
             draws++;
         }
 
+        RoundEnded?.Invoke();
         return round.result;
     }
 }

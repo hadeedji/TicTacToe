@@ -6,7 +6,7 @@ public class HumanPlayer : Player {
     public override CellLocation MakeMove(Board board) {
         while (true) {
             try {
-                (int rowIndex, int columnIndex) = PromptAndRead();
+                (int rowIndex, int columnIndex) = GetInput();
                 var location = new CellLocation(rowIndex, columnIndex);
                 if (board.GetCell(location) != Cell.E) {
                     Console.WriteLine("Location is filled already.");
@@ -20,7 +20,7 @@ public class HumanPlayer : Player {
         }
     }
 
-    private (int, int) PromptAndRead() {
+    private (int, int) GetInput() {
         Console.Write("Enter the cell:\n> ");
         var input = Console.ReadLine();
         var rowIndex = input[0] switch {

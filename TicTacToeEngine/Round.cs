@@ -3,30 +3,26 @@ using System.Linq;
 
 namespace TicTacToeEngine {
 internal class Round {
-    private Board _board;
+    public Board board { get; }
     public bool inPlay { get; set; }
-    public Result result;
+    public Result result { get; set; }
 
     public event Action<Player> WinnerFound;
 
-    public Board boardCopy {
-        get => _board.GetCopy();
-    }
-
     public Round() {
-        _board = new Board();
+        board = new Board();
         inPlay = true;
     }
 
     public void Move(Player player) {
-        _board.MakeMark(player.MakeMove(boardCopy), player.mark);
+        board.MakeMark(player.MakeMove(board), player.mark);
         if (FindWinner()) {
             WinnerFound?.Invoke(player);
             inPlay = false;
             return;
         }
 
-        if (boardCopy.numberOfEmptyCells == 0) {
+        if (board.numberOfEmptyCells == 0) {
             result = Result.Draw;
             inPlay = false;
         }
@@ -35,19 +31,19 @@ internal class Round {
     //TODO: Refactor FindWinner() please.
     private bool FindWinner() {
         for (int i = 0; i < 3; i++) {
-            if (_board.Row(i).All(state => state == _board.Row(i)[0] && state != Cell.E)) {
+            if (board.Row(i).All(state => state == board.Row(i)[0] && state != Cell.E)) {
                 return true;
             }
         }
 
         for (int i = 0; i < 3; i++) {
-            if (_board.Column(i).All(state => state == _board.Column(i)[0] && state != Cell.E)) {
+            if (board.Column(i).All(state => state == board.Column(i)[0] && state != Cell.E)) {
                 return true;
             }
         }
 
         foreach (bool isPrincipal in new[] {true, false}) {
-            if (_board.Diagonal(isPrincipal).All(state => state == _board.Diagonal(isPrincipal)[0] && state != Cell.E)) {
+            if (board.Diagonal(isPrincipal).All(state => state == board.Diagonal(isPrincipal)[0] && state != Cell.E)) {
                 return true;
             }
         }

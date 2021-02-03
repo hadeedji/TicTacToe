@@ -5,16 +5,11 @@ using TicTacToeEngine;
 namespace ConsoleUI {
 public class PlayersMenu {
     private int selectedIndex { get; set; }
-    private Player[] players { get; set; }
     private string[] playerNames { get; set; }
-    private Random randomNumberGenerator { get; set; }
-
 
     public PlayersMenu() {
         selectedIndex = 0;
-        players = new Player[2];
         playerNames = new[] {"", ""};
-        randomNumberGenerator = new Random();
     }
 
     private void DisplayMenu() {
@@ -41,6 +36,9 @@ public class PlayersMenu {
     public Player[] GetPlayers() {
         DisplayMenu();
 
+        Player[] players = new Player[2];
+        Random randomNumberGenerator = new Random();
+        
         var conditional = true;
         while (conditional) {
             var keyPressed = Console.ReadKey(true).Key;
