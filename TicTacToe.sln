@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeEngine", "TicTacTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtificialIntelligenceEngine", "ArtificialIntelligenceEngine\ArtificialIntelligenceEngine.csproj", "{2DAD0359-F679-4868-A038-4B100DF9F0C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIVersurAI", "AIVersurAI\AIVersurAI.csproj", "{850D20ED-44CF-48D8-B3AA-406E19EE7F1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{2DAD0359-F679-4868-A038-4B100DF9F0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DAD0359-F679-4868-A038-4B100DF9F0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DAD0359-F679-4868-A038-4B100DF9F0C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{850D20ED-44CF-48D8-B3AA-406E19EE7F1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{850D20ED-44CF-48D8-B3AA-406E19EE7F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{850D20ED-44CF-48D8-B3AA-406E19EE7F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{850D20ED-44CF-48D8-B3AA-406E19EE7F1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
