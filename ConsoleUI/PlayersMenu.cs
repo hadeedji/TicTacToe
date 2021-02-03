@@ -6,11 +6,17 @@ namespace ConsoleUI {
 public class PlayersMenu {
     private int selectedIndex { get; set; }
     private string[] playerNames { get; set; }
+    private Player[] players { get; set; }
     public event Action ToggleHelp;
+
+    private bool playersCorrectlyInput {
+        get => players[0] != null && players[1] != null;
+    }
 
     public PlayersMenu() {
         selectedIndex = 0;
-        playerNames = new[] {"", ""};
+        players = new Player[2];
+        playerNames = new[] {string.Empty, string.Empty};
     }
 
     private void DisplayMenu() {
@@ -37,48 +43,51 @@ public class PlayersMenu {
     public Player[] GetPlayers() {
         DisplayMenu();
 
-        Player[] players = new Player[2];
         Random randomNumberGenerator = new Random();
-        
-        var conditional = true;
-        while (conditional) {
-            var keyPressed = Console.ReadKey(true).Key;
-            switch (keyPressed) {
-                case ConsoleKey.DownArrow:
-                    if (selectedIndex < playerNames.Length - 1) {
-                        selectedIndex++;
-                        DisplayMenu();
-                    }
+        var consoleInputController = new ConsoleInputController();
 
-                    break;
-                case ConsoleKey.UpArrow:
-                    if (selectedIndex > 0) {
-                        selectedIndex--;
-                        DisplayMenu();
-                    }
-
-                    break;
-                case ConsoleKey.H:
-                    var humanPlayer = new HumanPlayer();
-                    humanPlayer.ToggleHelp += ToggleHelp;
-                    players[selectedIndex] = humanPlayer;
-                    playerNames[selectedIndex] = "Human";
-                    DisplayMenu();
-                    break;
-                case ConsoleKey.A:
-                    players[selectedIndex] = new RandomPlayer(randomNumberGenerator);
-                    playerNames[selectedIndex] = "Artificial Intelligence";
-                    DisplayMenu();
-                    break;
-                case ConsoleKey.Enter:
-                    if (players[0] != null && players[1] != null) {
-                        conditional = false;
-                    }
-
-                    break;
+        consoleInputController.AddKeybind(ConsoleKey.DownArrow, delegate {
+            if (selectedIndex < playerNames.Length - 1) {
+                selectedIndex++;
+                DisplayMenu();
             }
-        }
+        });
 
+        consoleInputController.AddKeybind(ConsoleKey.UpArrow, delegate {
+            if (selectedIndex > 0) {
+                selectedIndex--;
+                DisplayMenu();
+            }
+        });
+
+        consoleInputController.AddKeybind(ConsoleKey.H, delegate {
+            var humanPlayer = new HumanPlayer();
+            humanPlayer.ToggleHelp += ToggleHelp;
+            players[selectedIndex] = humanPlayer;
+            playerNames[selectedIndex] = "Human";
+            DisplayMenu();
+        });
+
+        consoleInputController.AddKeybind(ConsoleKey.A, delegate {
+            players[selectedIndex] = new RandomPlayer(randomNumberGenerator);
+            playerNames[selectedIndex] = "Artificial Intelligence";
+            DisplayMenu();
+        });
+        
+        consoleInputController.AddKeybind(ConsoleKey.R, delegate {
+            players[selectedIndex] = null;
+            playerNames[selectedIndex] = string.Empty;
+            DisplayMenu();
+        });
+
+        consoleInputController.AddKeybind(ConsoleKey.Enter, delegate { });
+
+        consoleInputController.AddKeybind(ConsoleKey.E, delegate { Environment.Exit(0); });
+
+
+        do {
+            consoleInputController.Run();
+        } while (!(playersCorrectlyInput && consoleInputController.lastKeyPressed == ConsoleKey.Enter));
 
         return players;
     }
