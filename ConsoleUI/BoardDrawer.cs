@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using TicTacToeEngine;
 
 namespace ConsoleUI {
@@ -63,7 +62,8 @@ public class BoardDrawer {
         return board.GetCell(rowIndex, columnIndex) switch {
             Cell.E => " ",
             Cell.X => "X",
-            Cell.O => "O"
+            Cell.O => "O",
+            _ => throw new ArgumentOutOfRangeException()
         };
     }
 }
