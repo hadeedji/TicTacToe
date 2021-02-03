@@ -8,25 +8,15 @@ class Program {
     private static GameController gameController { get; set; }
 
     static void Main() {
-        ConsoleKey key;
-        do {
-            SetUp();
-            do {
-                ShowResult(gameController.StartGame());
-                key = GetKey();
-            } while (key == ConsoleKey.A);
-        } while (key == ConsoleKey.M);
-    }
+        SetUp();
+        var consoleInputController = new ConsoleInputController();
 
-    private static ConsoleKey GetKey() {
+        consoleInputController.AddKeybind(ConsoleKey.A, () => ShowResult(gameController.StartGame()));
+        consoleInputController.AddKeybind(ConsoleKey.M, () => SetUp());
+        consoleInputController.AddKeybind(ConsoleKey.E, () => Environment.Exit(0));
+
         while (true) {
-            var key = Console.ReadKey(true).Key;
-            switch (key) {
-                case ConsoleKey.A:
-                case ConsoleKey.M:
-                case ConsoleKey.E:
-                    return key;
-            }
+           consoleInputController.Run(); 
         }
     }
 
@@ -66,6 +56,8 @@ class Program {
         }
 
         gameController.RoundEnded += delegate { gameController.DrawBoard -= boardDrawer.DrawBoard; };
+
+        ShowResult(gameController.StartGame());
     }
 }
 }
