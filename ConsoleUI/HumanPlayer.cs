@@ -3,34 +3,69 @@ using TicTacToeEngine;
 
 namespace ConsoleUI {
 public class HumanPlayer : Player {
-    public override CellLocation MakeMove(Board board) {
-        while (true) {
-            try {
-                (int rowIndex, int columnIndex) = GetInput();
-                var location = new CellLocation(rowIndex, columnIndex);
-                if (board.GetCell(location) != Cell.E) {
-                    Console.WriteLine("Location is filled already.");
-                    continue;
-                }
+    public event Action ToggleHelp;
 
-                return location;
-            } catch (ArgumentException e) {
-                Console.WriteLine(e.Message);
-            }
-        }
+    public override CellLocation MakeMove(Board board) {
+        CellLocation location;
+        do {
+            location = new CellLocation(GetInput());
+        } while (board.GetCell(location) != Cell.E);
+
+        return location;
     }
 
     private (int, int) GetInput() {
-        Console.Write("Enter the cell:\n> ");
-        var input = Console.ReadLine();
-        var rowIndex = input[0] switch {
-            'a' => 0,
-            'b' => 1,
-            'c' => 2,
-            _ => -1
-        };
-        var columnIndex = Convert.ToInt32(input[1].ToString());
-        return (rowIndex, columnIndex - 1);
+        var result = (-1, -1);
+        while (result == (-1,-1)) {
+            var key = Console.ReadKey(true).Key;
+            if (key == ConsoleKey.H) {
+                ToggleHelp?.Invoke();
+                while (Console.ReadKey(true).Key != ConsoleKey.H) { }
+
+                ToggleHelp?.Invoke();
+            } else {
+                switch (key) {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        result = (2, 0);
+                        break;
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        result = (2, 1);
+                        break;
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        result = (2, 2);
+                        break;
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        result = (1, 0);
+                        break;
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        result = (1, 1);
+                        break;
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
+                        result = (1, 2);
+                        break;
+                    case ConsoleKey.D7:
+                    case ConsoleKey.NumPad7:
+                        result = (0, 0);
+                        break;
+                    case ConsoleKey.D8:
+                    case ConsoleKey.NumPad8:
+                        result = (0, 1);
+                        break;
+                    case ConsoleKey.D9:
+                    case ConsoleKey.NumPad9:
+                        result = (0, 2);
+                        break;
+                }
+            }
+        }
+
+        return result;
     }
 }
 }

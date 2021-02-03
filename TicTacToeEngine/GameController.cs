@@ -1,15 +1,19 @@
 ﻿using System;
 
 namespace TicTacToeEngine {
+public class Scores {
+    public int player1Score { get; internal set; }
+    public int player2Score { get; internal set; }
+    public int draws { get; internal set; }
+}
+
 public class GameController {
     private Player player1 { get; }
     private Player player2 { get; }
     private Round round { get; set; }
 
     public Board board => round.board;
-    public int player1Score { get; private set; }
-    public int player2Score { get; private set; }
-    public int draws { get; private set; }
+    public Scores scores { get; }
 
     public event Action DrawBoard;
     public event Action RoundStarted;
@@ -18,6 +22,7 @@ public class GameController {
     public GameController(Player player1, Player player2) {
         (this.player1, this.player2) = (player1, player2);
         (this.player1.mark, this.player2.mark) = (Cell.X, Cell.O);
+        scores = new Scores();
     }
 
     public Result StartGame() {
@@ -27,12 +32,12 @@ public class GameController {
         round.WinnerFound += player => {
             if (player == player1) {
                 round.result = Result.PlayerOneWon;
-                player1Score++;
+                scores.player1Score++;
             }
 
             if (player == player2) {
                 round.result = Result.PlayerTwoWon;
-                player2Score++;
+                scores.player2Score++;
             }
         };
 
@@ -48,7 +53,7 @@ public class GameController {
         } while (round.inPlay);
 
         if (round.result == Result.Draw) {
-            draws++;
+            scores.draws++;
         }
 
         RoundEnded?.Invoke();

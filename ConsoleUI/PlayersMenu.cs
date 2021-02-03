@@ -6,6 +6,7 @@ namespace ConsoleUI {
 public class PlayersMenu {
     private int selectedIndex { get; set; }
     private string[] playerNames { get; set; }
+    public event Action ToggleHelp;
 
     public PlayersMenu() {
         selectedIndex = 0;
@@ -58,7 +59,9 @@ public class PlayersMenu {
 
                     break;
                 case ConsoleKey.H:
-                    players[selectedIndex] = new HumanPlayer();
+                    var humanPlayer = new HumanPlayer();
+                    humanPlayer.ToggleHelp += ToggleHelp;
+                    players[selectedIndex] = humanPlayer;
                     playerNames[selectedIndex] = "Human";
                     DisplayMenu();
                     break;

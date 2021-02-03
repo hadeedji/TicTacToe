@@ -17,5 +17,8 @@ public struct CellLocation {
             throw new ArgumentException($"Cell Location ({rowIndex}, {columnIndex}) is out of range.");
         }
     }
+
+    public CellLocation((int rowIndex, int columnIndex) coordinates) : this(
+        coordinates.rowIndex, coordinates.columnIndex) { }
 }
 }
