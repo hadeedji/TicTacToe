@@ -31,12 +31,9 @@ internal class Round {
     private bool FindWinner() {
         var winningArangements = board.WinningArrangements();
         foreach (Cell[] arangement in winningArangements) {
-            if (arangement.Contains(Cell.E))
-                continue;
+            if (arangement.Contains(Cell.E)) continue;
 
-            if (arangement[0] == arangement[1] && arangement[1] == arangement[2]) {
-                return true;
-            }
+            if (arangement[0] == arangement[1] && arangement[1] == arangement[2]) return true;
         }
 
         return false;
