@@ -14,7 +14,7 @@ public class ConsoleInputController {
         }
     }
     
-    public ConsoleKey lastKeyPressed { get; private set; }
+    public ConsoleKey key { get; private set; }
 
     private List<Keybind> keybinds { get; }
 
@@ -30,10 +30,8 @@ public class ConsoleInputController {
     public void Run() {
         FlushInput();
         
-        ConsoleKey key;
         do {
             key = Console.ReadKey(true).Key;
-            lastKeyPressed = key;
         } while (!keybinds.Select(keybind => keybind.key).Contains(key));
 
         foreach (Keybind keybind in keybinds.Where(keybind => keybind.key == key)) {

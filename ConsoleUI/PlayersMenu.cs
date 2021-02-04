@@ -9,9 +9,7 @@ public class PlayersMenu {
     private Player[] players { get; set; }
     public event Action ToggleHelp;
 
-    private bool playersCorrectlyInput {
-        get => players[0] != null && players[1] != null;
-    }
+    private bool playersCorrectlyInput => players[0] != null && players[1] != null;
 
     public PlayersMenu() {
         selectedIndex = 0;
@@ -93,7 +91,7 @@ public class PlayersMenu {
 
         do {
             consoleInputController.Run();
-        } while (!(playersCorrectlyInput && consoleInputController.lastKeyPressed == ConsoleKey.Enter));
+        } while (!(playersCorrectlyInput && consoleInputController.key == ConsoleKey.Enter));
 
         return players;
     }
