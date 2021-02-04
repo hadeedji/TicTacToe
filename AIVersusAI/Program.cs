@@ -8,7 +8,7 @@ class Program {
     static void Main() {
         Random randomNumberGenerator = new Random();
         Player player1 = new MiniMaxPlayer(randomNumberGenerator);
-        Player player2 = new RandomPlayer(randomNumberGenerator);
+        Player player2 = new MiniMaxPlayer(randomNumberGenerator);
 
         GameController gameController = new GameController(player1, player2);
 

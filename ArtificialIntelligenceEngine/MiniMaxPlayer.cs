@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using TicTacToeEngine;
 
@@ -21,8 +19,8 @@ public class MiniMaxPlayer : AiPlayer {
             scores[i] = MiniMax(branches[i], Int32.MinValue, Int32.MaxValue, false);
         }
 
-        var maxScores = scores.Select((score, index) => score == scores.Max() ? index : -1).Where(index => index != -1);
-        return position.EmptyCells()[maxScores.ToArray()[randomNumberGenerator.Next(maxScores.Count())]];
+        var maxScores = scores.Select((score, index) => score == scores.Max() ? index : -1).Where(index => index != -1).ToArray();
+        return position.EmptyCells()[maxScores[randomNumberGenerator.Next(maxScores.Length)]];
     }
 
     int MiniMax(Position position, int alpha, int beta, bool myTurn) {
@@ -35,11 +33,9 @@ public class MiniMaxPlayer : AiPlayer {
             var bestScore = Int32.MinValue;
             foreach (Position branch in branches) {
                 var score = MiniMax(branch, alpha, beta, false);
-                bestScore = new int[] {bestScore, score}.Max();
-                alpha = new int[] {alpha, score}.Max();
-                if (beta <= alpha) {
-                    break;
-                }
+                bestScore = new[] {bestScore, score}.Max();
+                alpha = new[] {alpha, score}.Max();
+                if (beta <= alpha) break;
             }
 
             return bestScore;
@@ -48,21 +44,20 @@ public class MiniMaxPlayer : AiPlayer {
             var bestScore = Int32.MaxValue;
             foreach (Position branch in branches) {
                 var score = MiniMax(branch, alpha, beta, true);
-                bestScore = new int[] {bestScore, score}.Min();
-                beta = new int[] {beta, score}.Min();
-                if (beta <= alpha) {
-                    break;
-                }
+                bestScore = new[] {bestScore, score}.Min();
+                beta = new[] {beta, score}.Min();
+                if (beta <= alpha) break;
             }
 
             return bestScore;
         }
     }
 
-    Cell GetOppositeMark(Cell mark) {
-        return mark switch {
+    Cell GetOppositeMark(Cell ofMark) {
+        return ofMark switch {
             Cell.O => Cell.X,
-            Cell.X => Cell.O
+            Cell.X => Cell.O,
+            _ => throw new ArgumentOutOfRangeException(nameof(ofMark), ofMark, null)
         };
     }
 }

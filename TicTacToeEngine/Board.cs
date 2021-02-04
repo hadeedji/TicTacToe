@@ -40,7 +40,7 @@ public class Board {
     public Cell[] Row(int rowIndex) {
         Cell[] row = new Cell[3];
         for (int i = 0; i < 3; i++) {
-            row[i] = this.GetCell(rowIndex, i);
+            row[i] = GetCell(rowIndex, i);
         }
 
         return row;
@@ -49,7 +49,7 @@ public class Board {
     public Cell[] Column(int columnIndex) {
         Cell[] column = new Cell[3];
         for (int i = 0; i < 3; i++) {
-            column[i] = this.GetCell(i, columnIndex);
+            column[i] = GetCell(i, columnIndex);
         }
 
         return column;

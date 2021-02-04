@@ -22,8 +22,8 @@ public class ConsoleInputController {
         keybinds = new List<Keybind>();
     }
     
-    public void AddKeybind(ConsoleKey key, Action action) {
-        keybinds.Add(new Keybind(key, action));
+    public void AddKeybind(ConsoleKey keyToAdd, Action action) {
+        keybinds.Add(new Keybind(keyToAdd, action));
     }
 
     //TODO: Inefficient function. Fix when you learn better LINQ

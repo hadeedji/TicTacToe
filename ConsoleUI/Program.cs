@@ -13,9 +13,9 @@ class Program {
 
         consoleInputController.AddKeybind(ConsoleKey.A, () => ShowResult(gameController.StartGame()));
         consoleInputController.AddKeybind(ConsoleKey.M, () => SetUpAndStarGame());
-        consoleInputController.AddKeybind(ConsoleKey.E, () => Environment.Exit(0));
+        consoleInputController.AddKeybind(ConsoleKey.E,() => {});
 
-        while (true) {
+        while (consoleInputController.key != ConsoleKey.E) {
            consoleInputController.Run(); 
         }
     }
