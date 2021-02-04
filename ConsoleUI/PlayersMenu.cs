@@ -74,6 +74,12 @@ public class PlayersMenu {
             DisplayMenu();
         });
         
+        consoleInputController.AddKeybind(ConsoleKey.M, delegate {
+            players[selectedIndex] = new MiniMaxPlayer();
+            playerNames[selectedIndex] = "MiniMax";
+           DisplayMenu();
+        });
+        
         consoleInputController.AddKeybind(ConsoleKey.R, delegate {
             players[selectedIndex] = null;
             playerNames[selectedIndex] = string.Empty;
