@@ -5,7 +5,7 @@ using System.Linq;
 using TicTacToeEngine;
 
 namespace ArtificialIntelligenceEngine {
-public class MiniMaxPlayer : Player {
+public class MiniMaxPlayer : AiPlayer {
     public override CellLocation MakeMove(Board board) {
         var position = new Position(board);
         var branches = position.GetBranchingPositions(mark);

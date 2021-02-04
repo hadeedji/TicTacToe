@@ -28,6 +28,8 @@ public class ConsoleInputController {
 
     //TODO: Inefficient function. Fix when you learn better LINQ
     public void Run() {
+        FlushInput();
+        
         ConsoleKey key;
         do {
             key = Console.ReadKey(true).Key;
@@ -36,6 +38,12 @@ public class ConsoleInputController {
 
         foreach (Keybind keybind in keybinds.Where(keybind => keybind.key == key)) {
             keybind.action.Invoke();
+        }
+    }
+
+    private static void FlushInput() {
+        while (Console.KeyAvailable) {
+            Console.ReadKey(true);
         }
     }
 }

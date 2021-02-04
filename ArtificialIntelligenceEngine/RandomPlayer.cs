@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TicTacToeEngine;
 
 namespace ArtificialIntelligenceEngine {
-public class RandomPlayer : Player {
+public class RandomPlayer : AiPlayer {
     private Random randomNumberGenerator { get; }
 
     public RandomPlayer(Random randomNumberGenerator){

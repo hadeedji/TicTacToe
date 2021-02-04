@@ -51,7 +51,7 @@ class Program {
             gameController.DrawBoard += boardDrawer.DrawBoard;
         };
 
-        if (players[0] is RandomPlayer && players[1] is RandomPlayer) {
+        if (players[0] is AiPlayer && players[1] is AiPlayer) {
             gameController.DrawBoard += () => Thread.Sleep(300);
         }
 
