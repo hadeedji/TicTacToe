@@ -8,11 +8,11 @@ class Program {
     private static GameController gameController { get; set; }
 
     static void Main() {
-        SetUp();
+        SetUpAndStarGame();
         var consoleInputController = new ConsoleInputController();
 
         consoleInputController.AddKeybind(ConsoleKey.A, () => ShowResult(gameController.StartGame()));
-        consoleInputController.AddKeybind(ConsoleKey.M, () => SetUp());
+        consoleInputController.AddKeybind(ConsoleKey.M, () => SetUpAndStarGame());
         consoleInputController.AddKeybind(ConsoleKey.E, () => Environment.Exit(0));
 
         while (true) {
@@ -35,7 +35,7 @@ class Program {
         }
     }
 
-    private static void SetUp() {
+    private static void SetUpAndStarGame() {
         BoardDrawer boardDrawer = new BoardDrawer();
         PlayersMenu playersMenu = new PlayersMenu();
 
