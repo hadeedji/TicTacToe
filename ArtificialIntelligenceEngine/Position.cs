@@ -98,7 +98,7 @@ internal readonly struct Position {
     private Cell[] GetRow(int rowIndex) {
         Cell[] row = new Cell[3];
         for (int columnIndex = 0; columnIndex < 3; columnIndex++) {
-            row[rowIndex] = grid[rowIndex, columnIndex];
+            row[columnIndex] = grid[rowIndex, columnIndex];
         }
 
         return row;
