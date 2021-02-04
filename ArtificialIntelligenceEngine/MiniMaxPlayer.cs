@@ -6,6 +6,10 @@ using TicTacToeEngine;
 namespace ArtificialIntelligenceEngine {
 public class MiniMaxPlayer : Player {
     public override CellLocation MakeMove(Board board) {
+        if (board.GetCell(1, 1) == Cell.E) {
+            return new CellLocation(1, 1);
+        }
+        
         var emptyCells = new List<CellLocation>();
         for (int rowIndex = 0; rowIndex < 3; rowIndex++) {
             for (int columnIndex = 0; columnIndex < 3; columnIndex++) {

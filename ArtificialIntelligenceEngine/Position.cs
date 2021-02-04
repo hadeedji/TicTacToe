@@ -116,7 +116,7 @@ internal readonly struct Position {
     private Cell[] GetDiagonal(bool isPrincipal) {
         Cell[] diagonal = new Cell[3];
         for (int i = 0; i < 3; i++) {
-            diagonal[i] = grid[isPrincipal ? i : 2 - 1, i];
+            diagonal[i] = grid[isPrincipal ? i : 2 - i, i];
         }
 
         return diagonal;
