@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using TicTacToeEngine;
 
 namespace ArtificialIntelligenceEngine {
@@ -15,10 +16,19 @@ public class MiniMaxPlayer : AiPlayer {
         var branches = position.GetBranchingPositions(mark);
         var scores = new int[branches.Length];
 
-        for (var i = 0; i < branches.Length; i++) {
-            scores[i] = MiniMax(branches[i], Int32.MinValue, Int32.MaxValue, false);
+        var threads = new Thread[branches.Length];
+        for (var index = 0; index < branches.Length; index++) {
+            var i = index;
+            threads[i] = new Thread(new ThreadStart(delegate {
+                scores[i] = MiniMax(branches[i], Int32.MinValue, Int32.MaxValue, false);
+            }));
+            threads[i].Start();
         }
 
+        for (int i = 0; i < branches.Length; i++) {
+            threads[i].Join();
+        }
+        
         var maxScores = scores.Select((score, index) => score == scores.Max() ? index : -1).Where(index => index != -1).ToArray();
         return position.EmptyCells()[maxScores[randomNumberGenerator.Next(maxScores.Length)]];
     }
