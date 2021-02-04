@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using TicTacToeEngine;
 
@@ -11,7 +12,7 @@ public class MiniMaxPlayer : Player {
         var scores = new int[branches.Length];
 
         for (var i = 0; i < branches.Length; i++) {
-            scores[i] = MiniMax(branches[i], 0, 0, false);
+            scores[i] = MiniMax(branches[i], Int32.MinValue, Int32.MaxValue, false);
         }
 
         return position.EmptyCells()[scores.ToList().IndexOf(scores.Max())];
@@ -28,6 +29,10 @@ public class MiniMaxPlayer : Player {
             foreach (Position branch in branches) {
                 var score = MiniMax(branch, alpha, beta, false);
                 bestScore = new int[] {bestScore, score}.Max();
+                alpha = new int[] {alpha, score}.Max();
+                if (beta <= alpha) {
+                    break;
+                }
             }
 
             return bestScore;
@@ -37,6 +42,10 @@ public class MiniMaxPlayer : Player {
             foreach (Position branch in branches) {
                 var score = MiniMax(branch, alpha, beta, true);
                 bestScore = new int[] {bestScore, score}.Min();
+                beta = new int[] {beta, score}.Min();
+                if (beta <= alpha) {
+                    break;
+                }
             }
 
             return bestScore;
