@@ -67,7 +67,7 @@ public class PlayersMenu {
         });
 
         consoleInputController.AddKeybind(ConsoleKey.A, delegate {
-            players[selectedIndex] = new MiniMaxPlayer();
+            players[selectedIndex] = new MiniMaxPlayer(randomNumberGenerator);
             playerNames[selectedIndex] = "Artificial Intelligence";
             DisplayMenu();
         });

@@ -6,6 +6,12 @@ using TicTacToeEngine;
 
 namespace ArtificialIntelligenceEngine {
 public class MiniMaxPlayer : AiPlayer {
+    private Random randomNumberGenerator { get; }
+
+    public MiniMaxPlayer(Random randomNumberGenerator) {
+        this.randomNumberGenerator = randomNumberGenerator;
+    }
+
     public override CellLocation MakeMove(Board board) {
         var position = new Position(board);
         var branches = position.GetBranchingPositions(mark);
@@ -15,7 +21,8 @@ public class MiniMaxPlayer : AiPlayer {
             scores[i] = MiniMax(branches[i], Int32.MinValue, Int32.MaxValue, false);
         }
 
-        return position.EmptyCells()[scores.ToList().IndexOf(scores.Max())];
+        var maxScores = scores.Select((score, index) => score == scores.Max() ? index : -1).Where(index => index != -1);
+        return position.EmptyCells()[maxScores.ToArray()[randomNumberGenerator.Next(maxScores.Count())]];
     }
 
     int MiniMax(Position position, int alpha, int beta, bool myTurn) {
