@@ -7,8 +7,8 @@ namespace AIVersusAI {
 class Program {
     static void Main() {
         Random randomNumberGenerator = new Random();
-        Player player1 = new RandomPlayer(randomNumberGenerator);
-        Player player2 = new RandomPlayer(randomNumberGenerator);
+        Player player1 = new MiniMaxPlayer();
+        Player player2 = new MiniMaxPlayer();
 
         GameController gameController = new GameController(player1, player2);
 

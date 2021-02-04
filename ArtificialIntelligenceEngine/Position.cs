@@ -30,6 +30,19 @@ internal readonly struct Position {
         return -1;
     }
 
+    public CellLocation[] EmptyCells() {
+        var emptyCells = new List<CellLocation>();
+        for (int rowIndex = 0; rowIndex < 3; rowIndex++) {
+            for (int columnIndex = 0; columnIndex < 3; columnIndex++) {
+                if (grid[rowIndex, columnIndex] == Cell.E) {
+                    emptyCells.Add(new CellLocation(rowIndex, columnIndex));
+                }
+            }
+        }
+
+        return emptyCells.ToArray();
+    }
+
     public bool IsOver() {
         if (FindWinner() != Cell.E)
             return true;

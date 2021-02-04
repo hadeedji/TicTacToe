@@ -69,18 +69,18 @@ public class PlayersMenu {
         });
 
         consoleInputController.AddKeybind(ConsoleKey.A, delegate {
-            players[selectedIndex] = new RandomPlayer(randomNumberGenerator);
+            players[selectedIndex] = new MiniMaxPlayer();
             playerNames[selectedIndex] = "Artificial Intelligence";
             DisplayMenu();
         });
         
-        consoleInputController.AddKeybind(ConsoleKey.M, delegate {
-            players[selectedIndex] = new MiniMaxPlayer();
-            playerNames[selectedIndex] = "MiniMax";
+        consoleInputController.AddKeybind(ConsoleKey.R, delegate {
+            players[selectedIndex] = new RandomPlayer(randomNumberGenerator);
+            playerNames[selectedIndex] = "Random Intelligence";
            DisplayMenu();
         });
         
-        consoleInputController.AddKeybind(ConsoleKey.R, delegate {
+        consoleInputController.AddKeybind(ConsoleKey.X, delegate {
             players[selectedIndex] = null;
             playerNames[selectedIndex] = string.Empty;
             DisplayMenu();
