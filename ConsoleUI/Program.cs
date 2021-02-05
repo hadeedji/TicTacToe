@@ -13,10 +13,10 @@ class Program {
 
         consoleInputController.AddKeybind(ConsoleKey.A, () => ShowResult(gameController.StartGame()));
         consoleInputController.AddKeybind(ConsoleKey.M, () => SetUpAndStartGame());
-        consoleInputController.AddKeybind(ConsoleKey.E,() => {});
+        consoleInputController.AddKeybind(ConsoleKey.E, () => { });
 
         while (consoleInputController.key != ConsoleKey.E) {
-           consoleInputController.Run(); 
+            consoleInputController.Run();
         }
     }
 
@@ -43,6 +43,12 @@ class Program {
 
         var players = playersMenu.GetPlayers();
         gameController = new GameController(players[0], players[1]);
+
+        foreach (Player player in players) {
+            if (player is HumanPlayer) {
+                ((HumanPlayer) player).Restart += () => gameController.StartGame();
+            }
+        }
 
         boardDrawer.scores = gameController.scores;
 

@@ -4,6 +4,7 @@ using TicTacToeEngine;
 namespace ConsoleUI {
 public class HumanPlayer : Player {
     public event Action ToggleHelp;
+    public event Action Restart;
 
     public override CellLocation MakeMove(Board board) {
         CellLocation location;
@@ -24,6 +25,8 @@ public class HumanPlayer : Player {
             helpInputController.Run();
             consoleInputController.Run();
         });
+        consoleInputController.AddKeybind(ConsoleKey.R, Restart);
+        consoleInputController.AddKeybind(ConsoleKey.E, () => Environment.Exit(0));
 
         (int, int) result = (-1, -1);
         AddKeybind(ConsoleKey.D1, ConsoleKey.NumPad1, () => result = (2, 0));
@@ -35,6 +38,7 @@ public class HumanPlayer : Player {
         AddKeybind(ConsoleKey.D7, ConsoleKey.NumPad7, () => result = (0, 0));
         AddKeybind(ConsoleKey.D8, ConsoleKey.NumPad8, () => result = (0, 1));
         AddKeybind(ConsoleKey.D9, ConsoleKey.NumPad9, () => result = (0, 2));
+
 
         consoleInputController.Run();
         return result;
