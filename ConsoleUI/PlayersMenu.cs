@@ -7,6 +7,8 @@ public class PlayersMenu {
     private int selectedIndex { get; set; }
     private string[] playerNames { get; set; }
     private Player[] players { get; set; }
+    private Random randomNumberGenerator { get; set; }
+    private ConsoleInputController consoleInputController { get; set; }
     public event Action ToggleHelp;
 
     private bool playersCorrectlyInput => players[0] != null && players[1] != null;
@@ -15,6 +17,9 @@ public class PlayersMenu {
         selectedIndex = 0;
         players = new Player[2];
         playerNames = new[] {string.Empty, string.Empty};
+
+        randomNumberGenerator = new Random();
+        consoleInputController = new ConsoleInputController();
     }
 
     private void DisplayMenu() {
@@ -41,59 +46,60 @@ public class PlayersMenu {
     public Player[] GetPlayers() {
         DisplayMenu();
 
-        Random randomNumberGenerator = new Random();
-        var consoleInputController = new ConsoleInputController();
-
-        consoleInputController.AddKeybind(ConsoleKey.DownArrow, delegate {
-            if (selectedIndex < playerNames.Length - 1) {
-                selectedIndex++;
-                DisplayMenu();
-            }
-        });
-
-        consoleInputController.AddKeybind(ConsoleKey.UpArrow, delegate {
-            if (selectedIndex > 0) {
-                selectedIndex--;
-                DisplayMenu();
-            }
-        });
-
-        consoleInputController.AddKeybind(ConsoleKey.H, delegate {
-            var humanPlayer = new HumanPlayer();
-            humanPlayer.ToggleHelp += ToggleHelp;
-            players[selectedIndex] = humanPlayer;
-            playerNames[selectedIndex] = "Human";
-            DisplayMenu();
-        });
-
-        consoleInputController.AddKeybind(ConsoleKey.A, delegate {
-            players[selectedIndex] = new MiniMaxPlayer(randomNumberGenerator);
-            playerNames[selectedIndex] = "Artificial Intelligence";
-            DisplayMenu();
-        });
-        
-        consoleInputController.AddKeybind(ConsoleKey.R, delegate {
-            players[selectedIndex] = new RandomPlayer(randomNumberGenerator);
-            playerNames[selectedIndex] = "Random Intelligence";
-           DisplayMenu();
-        });
-        
-        consoleInputController.AddKeybind(ConsoleKey.X, delegate {
-            players[selectedIndex] = null;
-            playerNames[selectedIndex] = string.Empty;
-            DisplayMenu();
-        });
-
-        consoleInputController.AddKeybind(ConsoleKey.Enter, delegate { });
-
-        consoleInputController.AddKeybind(ConsoleKey.E, delegate { Environment.Exit(0); });
-
+        consoleInputController.AddKeybind(ConsoleKey.UpArrow, MoveSelectionUp);
+        consoleInputController.AddKeybind(ConsoleKey.DownArrow, MoveSelectionDown);
+        consoleInputController.AddKeybind(ConsoleKey.H, AddHumanPlayer);
+        consoleInputController.AddKeybind(ConsoleKey.A, AddAiPlayer);
+        consoleInputController.AddKeybind(ConsoleKey.R, AddRandomPlayer);
+        consoleInputController.AddKeybind(ConsoleKey.X, RemovePlayer);
+        consoleInputController.AddKeybind(ConsoleKey.Enter, () => { });
+        consoleInputController.AddKeybind(ConsoleKey.E, () => { Environment.Exit(0); });
 
         do {
             consoleInputController.Run();
         } while (!(playersCorrectlyInput && consoleInputController.key == ConsoleKey.Enter));
 
         return players;
+    }
+
+    private void MoveSelectionUp() {
+        if (selectedIndex > 0) {
+            selectedIndex--;
+            DisplayMenu();
+        }
+    }
+
+    private void MoveSelectionDown() {
+        if (selectedIndex < playerNames.Length - 1) {
+            selectedIndex++;
+            DisplayMenu();
+        }
+    }
+
+    private void AddHumanPlayer() {
+        var humanPlayer = new HumanPlayer();
+        humanPlayer.ToggleHelp += ToggleHelp;
+        players[selectedIndex] = humanPlayer;
+        playerNames[selectedIndex] = "Human";
+        MoveSelectionDown();
+    }
+
+    private void AddAiPlayer() {
+        players[selectedIndex] = new MiniMaxPlayer(randomNumberGenerator);
+        playerNames[selectedIndex] = "Artificial Intelligence";
+        MoveSelectionDown();
+    }
+
+    private void AddRandomPlayer() {
+        players[selectedIndex] = new RandomPlayer(randomNumberGenerator);
+        playerNames[selectedIndex] = "Random Intelligence";
+        MoveSelectionDown();
+    }
+
+    private void RemovePlayer() {
+        players[selectedIndex] = null;
+        playerNames[selectedIndex] = string.Empty;
+        DisplayMenu();
     }
 }
 }

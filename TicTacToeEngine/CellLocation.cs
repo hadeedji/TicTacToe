@@ -2,23 +2,20 @@
 
 namespace TicTacToeEngine {
 public struct CellLocation {
-    private int _rowIndex;
-    private int _columnIndex;
-
-    public int rowIndex => _rowIndex;
-    public int columnIndex => _columnIndex;
+    public int rowIndex { get; set; }
+    public int columnIndex { get; set; }
 
     public CellLocation(int rowIndex, int columnIndex) {
-        (_rowIndex, _columnIndex) = (0, 0);
+        (this.rowIndex, this.columnIndex) = (0, 0);
         if (0 <= rowIndex && rowIndex < 3 && 0 <= columnIndex && columnIndex < 3) {
-            _rowIndex = rowIndex;
-            _columnIndex = columnIndex;
+            this.rowIndex = rowIndex;
+            this.columnIndex = columnIndex;
         } else {
             throw new ArgumentException($"Cell Location ({rowIndex}, {columnIndex}) is out of range.");
         }
     }
 
-    public CellLocation((int rowIndex, int columnIndex) coordinates) : this(
-        coordinates.rowIndex, coordinates.columnIndex) { }
+    public CellLocation((int rowIndex, int columnIndex) coordinates) :
+        this(coordinates.rowIndex, coordinates.columnIndex) { }
 }
 }

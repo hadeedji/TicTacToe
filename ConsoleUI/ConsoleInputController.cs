@@ -26,7 +26,7 @@ public class ConsoleInputController {
         keybinds.Add(new Keybind(keyToAdd, action));
     }
 
-    //TODO: Inefficient function. Fix when you learn better LINQ
+    //TODO: Inefficient function.
     public void Run() {
         FlushInput();
         
