@@ -82,18 +82,21 @@ public class PlayersMenu {
         players[selectedIndex] = humanPlayer;
         playerNames[selectedIndex] = "Human";
         MoveSelectionDown();
+        DisplayMenu();
     }
 
     private void AddAiPlayer() {
         players[selectedIndex] = new MiniMaxPlayer(randomNumberGenerator);
         playerNames[selectedIndex] = "Artificial Intelligence";
         MoveSelectionDown();
+        DisplayMenu();
     }
 
     private void AddRandomPlayer() {
         players[selectedIndex] = new RandomPlayer(randomNumberGenerator);
         playerNames[selectedIndex] = "Random Intelligence";
         MoveSelectionDown();
+        DisplayMenu();
     }
 
     private void RemovePlayer() {
