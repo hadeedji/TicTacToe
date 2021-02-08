@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using ArtificialIntelligenceEngine;
 using TicTacToeEngine;
@@ -57,9 +58,8 @@ class Program {
             gameController.DrawBoard += boardDrawer.DrawBoard;
         };
 
-        if (players[0] is AiPlayer && players[1] is AiPlayer) {
+        if (Array.TrueForAll(players, p => p is AiPlayer))
             gameController.DrawBoard += () => Thread.Sleep(300);
-        }
 
         gameController.RoundEnded += delegate { gameController.DrawBoard -= boardDrawer.DrawBoard; };
 
